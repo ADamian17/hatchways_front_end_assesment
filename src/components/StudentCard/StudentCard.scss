@@ -1,0 +1,28 @@
+.card-container {
+    display: grid;
+    grid-template-columns: 200px auto;
+    width: 750px;
+    height: 200px;
+    border-bottom: 1px solid rgba(157, 154, 154, 0.55);
+    margin-bottom: 5px;
+
+
+    .img-wrapper {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            border-radius: 50%;
+            border: 1px solid rgba(157, 154, 154, 0.55);
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    .card-body {
+        display: grid;
+        line-height: 1em;
+        align-items: center; 
+    }
+}

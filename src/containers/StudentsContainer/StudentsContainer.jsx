@@ -4,7 +4,10 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getStudents } from '../../redux/students/students.actions';
 
-const url = 'https://www.hatchways.io/api/assessment/students';
+import StudentCard from '../../components/StudentCard/StudentCard';
+
+import './StudentsContainer.scss';
+
 
 class StudentsContainer extends Component {
     
@@ -16,7 +19,7 @@ class StudentsContainer extends Component {
         const { getStudents } = this.props;
 
         try {
-            const students = await axios.get(url);
+            const students = await axios.get('https://www.hatchways.io/api/assessment/students');
 
             if( students ) getStudents( students.data.students ); 
 
@@ -28,8 +31,17 @@ class StudentsContainer extends Component {
     };
 
     render () {
-        console.log(this.props);
-        return <h1>hello</h1>;
+        const studentsList  = this.props.studentsList.map( 
+            ( student, idx ) => <StudentCard student={student} key={idx} /> 
+        );
+        return (
+            <div className="container">
+                <input type="search" />
+                <div className="students-list-wrapper">
+                    {studentsList}
+                </div>
+            </div>
+        );
     }
 }
 
