@@ -10,6 +10,10 @@ import './StudentsContainer.scss';
 
 
 class StudentsContainer extends Component {
+
+    state = {
+        searchValue: ''
+    }
     
     componentDidMount () {
         this.getStudentsData();
@@ -30,13 +34,25 @@ class StudentsContainer extends Component {
         }
     };
 
+    handelChange = ( event ) => {
+        this.setState({
+            searchValue: event.target.value
+        });        
+    };
+
     render () {
-        const studentsList  = this.props.studentsList.map( 
-            ( student, idx ) => <StudentCard student={student} key={idx} /> 
-        );
+
+        const studentsList  = this.props.studentsList.filter( 
+            student => student.firstName.toLowerCase()
+                .includes(this.state.searchValue.toLowerCase()) || 
+                student.lastName.toLowerCase()
+                    .includes(this.state.searchValue.toLowerCase()) )
+            .map( ( student, idx ) => <StudentCard student={student} key={idx} /> 
+            );
+
         return (
             <div className="container">
-                <input type="search" />
+                <input id="name-input" name="search" type="search" placeholder="Seacrh by Name" onChange={this.handelChange} />
                 <div className="students-list-wrapper">
                     {studentsList}
                 </div>
