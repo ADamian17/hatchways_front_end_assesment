@@ -41,7 +41,7 @@ class StudentsContainer extends Component {
     };
 
     render () {
-
+        
         const studentsList  = this.props.studentsList.filter( 
             student => student.firstName.toLowerCase()
                 .includes(this.state.searchValue.toLowerCase()) || 
