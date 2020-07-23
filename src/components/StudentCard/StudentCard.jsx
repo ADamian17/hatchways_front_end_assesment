@@ -22,18 +22,21 @@ class StudentCard extends Component {
         this.setState({
             show: !this.state.show
         });
-        this.props.getStudentId( id );
+        // this.props.getStudentId( id );
     }
 
     render () {
-        const {company, email, firstName, lastName, grades, pic, skill, id } = this.props.student;
+        const { company, email, firstName, lastName, grades, pic, skill, id, tags } = this.props.student;
 
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
         const average = grades.reduce( reducer, grades.length );
         const gradeTestList = grades.map( (grade, idx ) => {
             return <p key={idx}>Test {idx + 1 }: {grade}%</p>;
         });
-        const tagsList = this.props.tags.map(( tag, idx ) => <div key={idx} className="tags" >{tag}</div> ); 
+        const tagsList = tags.map(( tag, idx ) => <div key={idx} className="tags" >{tag}</div> );
+        // const tagsList = tags.map(( tag, idx ) => console.log(tag) );
+        console.log(tags); 
+
         return (
             <div className="card-container" style={ this.state.show !== true ? {height: '200px'} : {height: '410px' } } >
                 <div className="img-wrapper">
@@ -65,7 +68,7 @@ class StudentCard extends Component {
 
                         <div className="form-container">
                             {
-                                this.props.tags.length !== 0 ? 
+                                tags.length !== 0 ? 
                                     (
                                         <div className="tags-container">
                                             {tagsList}

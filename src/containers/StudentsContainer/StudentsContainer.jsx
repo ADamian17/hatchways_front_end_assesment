@@ -3,16 +3,17 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 import { getStudents, getStudentId, addTag } from '../../redux/students/students.actions';
+// import { Student } from '../../Models/Student'
 
 import StudentCard from '../../components/StudentCard/StudentCard';
 
 import './StudentsContainer.scss';
 
-
 class StudentsContainer extends Component {
 
     state = {
-        searchValue: '',
+        searchByName: '',
+        searchByTag: '',
         tag: ''
     }
     
@@ -26,7 +27,14 @@ class StudentsContainer extends Component {
         try {
             const students = await axios.get('https://www.hatchways.io/api/assessment/students');
 
-            if( students ) getStudents( students.data.students.slice()); 
+            const studentsList = students.data.students.map( student => {
+                if(!student.tags) {
+                    student.tags = [];
+                }
+                return student;
+            });
+
+            if( studentsList ) getStudents( studentsList );
 
         } catch (error) {
 
@@ -43,33 +51,39 @@ class StudentsContainer extends Component {
 
 
     handleAddTag = ( event, id, state ) => {
-        const { addTag } = this.props;
+        const { addTag, getStudentId } = this.props;
         event.preventDefault();
+        getStudentId( id );
         if( id === '' && state === '' ) return;
         addTag( id, state );
+
     }
 
     render () {
-        console.log( this.props.selectedStudent.tags );
-
+        // console.log( this.props.selectedStudent );
+        
         const studentsList  = this.props.studentsList.filter( 
             student => student.firstName.toLowerCase()
-                .includes(this.state.searchValue.toLowerCase()) || 
+                .includes(this.state.searchByName.toLowerCase()) || 
                 student.lastName.toLowerCase()
-                    .includes(this.state.searchValue.toLowerCase()) )
-            .map( ( student ) => 
+                    .includes(this.state.searchByName.toLowerCase()) )
+            .map( ( student, idx ) => 
                 <StudentCard 
-                    student={ { ...student, tags: this.props.selectedStudent.tag ? this.props.selectedStudent.tag : [] }}
-                    key={student.id}
+                    student={student}
+                    key={ idx }
                     handleSubmit={this.handleAddTag}
-                    tags={ this.props.selectedStudent.tags ? this.props.selectedStudent.tags : [] }  
                     getStudentId={this.props.getStudentId} 
                     onChange={this.handelChange} /> 
             );
 
         return (
             <div className="container">
-                <input id="name-input" name="searchValue" type="search" placeholder="Seacrh by Name" onChange={this.handelChange} />
+                <div className="search-container">
+                    <input id="name-input" name="searchByName" type="search" placeholder="Seacrh by Name" onChange={this.handelChange} />
+                </div>
+                {/* <div className="search-container">
+                    <input name="searchByTag" type="search" placeholder="Seacrh by Tag" onChange={this.handelChange} />
+                </div> */}
                 <div className="students-list-wrapper">
                     {studentsList}
                 </div>

@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 };
 
 const jobReducer = ( state = INITIAL_STATE, action) => {
+    // state = JSON.parse(JSON.stringify(state));
     switch (action.type) {
         case StudentsActionTypes.GET_STUDENTS:
             return {
@@ -15,16 +16,13 @@ const jobReducer = ( state = INITIAL_STATE, action) => {
         case StudentsActionTypes.GET_STUDENT_ID:
             return {
                 ...state,
-                selectedStudent: state.studentsList[action.payload]
+                selectedStudent: state.studentsList.find( student => student.id === action.payload )
             };
         case StudentsActionTypes.ADD_TAG:
-            if( !state.selectedStudent.tags ) {
-                state.selectedStudent.tags = [];
-            }
-            state.studentsList[action.payload.id].tags.push(action.payload.tag);
+            state.selectedStudent.tags.push(action.payload.tag);
             return {
                 ...state,
-                selectedStudent: {...state.studentsList[action.payload.id]}
+                selectedStudent: {...state.selectedStudent}
             };
         default:
             return state;
