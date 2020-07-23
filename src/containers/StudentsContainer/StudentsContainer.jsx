@@ -50,7 +50,8 @@ class StudentsContainer extends Component {
     }
 
     render () {
-        console.log( this.props.selectedStudent );
+        console.log( this.props.selectedStudent.tags );
+
         const studentsList  = this.props.studentsList.filter( 
             student => student.firstName.toLowerCase()
                 .includes(this.state.searchValue.toLowerCase()) || 
@@ -58,10 +59,10 @@ class StudentsContainer extends Component {
                     .includes(this.state.searchValue.toLowerCase()) )
             .map( ( student ) => 
                 <StudentCard 
-                    student={student} 
+                    student={ { ...student, tags: this.props.selectedStudent.tag ? this.props.selectedStudent.tag : [] }}
                     key={student.id}
-                    tags={this.props.selectedStudent.tag ? this.props.selectedStudent.tag : [] }
-                    handleSubmit={this.handleAddTag}  
+                    handleSubmit={this.handleAddTag}
+                    tags={ this.props.selectedStudent.tags ? this.props.selectedStudent.tags : [] }  
                     getStudentId={this.props.getStudentId} 
                     onChange={this.handelChange} /> 
             );

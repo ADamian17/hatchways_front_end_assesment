@@ -31,28 +31,29 @@ class StudentCard extends Component {
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
         const average = grades.reduce( reducer, grades.length );
         const gradeTestList = grades.map( (grade, idx ) => {
-            return <p key={idx}>Test{idx + 1 }: {grade}%</p>;
+            return <p key={idx}>Test {idx + 1 }: {grade}%</p>;
         });
-    
-    
+        const tagsList = this.props.tags.map(( tag, idx ) => <div key={idx} className="tags" >{tag}</div> ); 
         return (
-
-            <div className="card-container" style={ this.state.show !== true ? {height: '225px'} : {height: '400px' } } >
+            <div className="card-container" style={ this.state.show !== true ? {height: '200px'} : {height: '410px' } } >
                 <div className="img-wrapper">
                     <img src={pic} alt="avatar" />
                 </div>
                 <div className="card-body">
     
                     <div className="content-wrapper">
-                        <h1> <span>{firstName.toUpperCase()}</span> <span>{lastName.toUpperCase()}</span></h1>
-                        <p>Email: {email}</p>
-                        <p>Company: {company}</p>
-                        <p>Skill: {skill}</p>
-                        <p>Average: {average}%</p>
-                    </div>
-    
-                    <div className="button-wrapper expand-btn" >
-                        <img src={ this.state.show !== true ? plus : minus } alt="button" onClick={( event ) => this.handleShow(event, id) } /> 
+                        <div className="content-header">
+                            <h1> <span>{firstName.toUpperCase()}</span> <span>{lastName.toUpperCase()}</span></h1>
+                            <div className="button-wrapper expand-btn" >
+                                <img src={ this.state.show !== true ? plus : minus } alt="button" onClick={( event ) => this.handleShow(event, id) } /> 
+                            </div>
+                        </div>
+                        <div className="content-body">
+                            <p>Email: {email}</p>
+                            <p>Company: {company}</p>
+                            <p>Skill: {skill}</p>
+                            <p>Average: {average}%</p>
+                        </div>
                     </div>
                 </div>
 
@@ -62,22 +63,27 @@ class StudentCard extends Component {
                     <div className="test-wrapper">
                         {gradeTestList}
 
-                        <div className="tags-container">
+                        <div className="form-container">
                             {
-                                this.props.tags.length !== 0 ? <p>{this.props.tags[0]}</p> : ''
+                                this.props.tags.length !== 0 ? 
+                                    (
+                                        <div className="tags-container">
+                                            {tagsList}
+                                        </div>
+                                    ) :  '' 
                             }
+                        
+                            <form 
+                                id="tag-input" 
+                                onSubmit={( event ) => this.props.handleSubmit( event, this.props.student.id, this.state.tag )}>
+                                <input 
+                                    name="tag" 
+                                    className="add-tag-input" 
+                                    type="text" 
+                                    placeholder="Add by Tag" 
+                                    onChange={ this.handleChange } />
+                            </form> 
                         </div>
-                        <form 
-                            id="tag-input" 
-                            onSubmit={( event ) => this.props.handleSubmit( event, this.props.student.id, this.state.tag )}>
-                            <button>new tag</button>
-                            <input 
-                                name="tag" 
-                                className="add-tag-input" 
-                                type="text" 
-                                placeholder="Add by Tag" 
-                                onChange={ this.handleChange } />
-                        </form> 
                     </div> 
                 }  
             </div>

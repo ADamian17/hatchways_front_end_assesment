@@ -13,20 +13,18 @@ const jobReducer = ( state = INITIAL_STATE, action) => {
                 studentsList: action.payload
             };
         case StudentsActionTypes.GET_STUDENT_ID:
-            // if( !state.studentsList[action.payload.id].tag ) {
-            //     state.studentsList[action.payload.id].tag = [];
-            // }
             return {
                 ...state,
                 selectedStudent: state.studentsList[action.payload]
             };
         case StudentsActionTypes.ADD_TAG:
-            if( !state.studentsList[action.payload.id].tag ) {
-                state.studentsList[action.payload.id].tag = [];
+            if( !state.selectedStudent.tags ) {
+                state.selectedStudent.tags = [];
             }
-            state.studentsList[action.payload.id].tag.push(action.payload.tag);
+            state.studentsList[action.payload.id].tags.push(action.payload.tag);
             return {
-                ...state
+                ...state,
+                selectedStudent: {...state.studentsList[action.payload.id]}
             };
         default:
             return state;
