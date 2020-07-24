@@ -6,7 +6,6 @@ const INITIAL_STATE = {
 };
 
 const jobReducer = ( state = INITIAL_STATE, action) => {
-    // state = JSON.parse(JSON.stringify(state));
     switch (action.type) {
         case StudentsActionTypes.GET_STUDENTS:
             return {

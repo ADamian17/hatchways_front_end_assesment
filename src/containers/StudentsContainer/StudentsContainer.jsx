@@ -3,9 +3,10 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 import { getStudents, getStudentId, addTag } from '../../redux/students/students.actions';
-// import { Student } from '../../Models/Student'
+import { Student } from '../../Models/Student';
 
 import StudentCard from '../../components/StudentCard/StudentCard';
+import { getAverage } from '../../utils/helpers';
 
 import './StudentsContainer.scss';
 
@@ -28,10 +29,19 @@ class StudentsContainer extends Component {
             const students = await axios.get('https://www.hatchways.io/api/assessment/students');
 
             const studentsList = students.data.students.map( student => {
-                if(!student.tags) {
-                    student.tags = [];
-                }
-                return student;
+
+                return new Student(
+                    student.city,
+                    student.company,
+                    student.email,
+                    student.grades,
+                    student.firstName, 
+                    student.lastName,
+                    student.id,
+                    student.skill,
+                    student.pic,
+                    getAverage( student.grades )
+                );  
             });
 
             if( studentsList ) getStudents( studentsList );
@@ -50,18 +60,14 @@ class StudentsContainer extends Component {
     };
 
 
-    handleAddTag = ( event, id, state ) => {
+    handleAddTag = ( id, state ) => {
         const { addTag, getStudentId } = this.props;
-        event.preventDefault();
         getStudentId( id );
         if( id === '' && state === '' ) return;
         addTag( id, state );
-
     }
 
     render () {
-        // console.log( this.props.selectedStudent );
-        
         const studentsList  = this.props.studentsList.filter( 
             student => student.firstName.toLowerCase()
                 .includes(this.state.searchByName.toLowerCase()) || 
@@ -71,7 +77,7 @@ class StudentsContainer extends Component {
                 <StudentCard 
                     student={student}
                     key={ idx }
-                    handleSubmit={this.handleAddTag}
+                    handleAddTag={this.handleAddTag}
                     getStudentId={this.props.getStudentId} 
                     onChange={this.handelChange} /> 
             );
@@ -81,9 +87,6 @@ class StudentsContainer extends Component {
                 <div className="search-container">
                     <input id="name-input" name="searchByName" type="search" placeholder="Seacrh by Name" onChange={this.handelChange} />
                 </div>
-                {/* <div className="search-container">
-                    <input name="searchByTag" type="search" placeholder="Seacrh by Tag" onChange={this.handelChange} />
-                </div> */}
                 <div className="students-list-wrapper">
                     {studentsList}
                 </div>

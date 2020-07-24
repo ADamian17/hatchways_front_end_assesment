@@ -17,25 +17,28 @@ class StudentCard extends Component {
         }); 
     }; 
 
-    handleShow = (event, id ) => {
+    handleShow = (event ) => {
         event.preventDefault();
         this.setState({
             show: !this.state.show
         });
-        // this.props.getStudentId( id );
     }
 
-    render () {
-        const { company, email, firstName, lastName, grades, pic, skill, id, tags } = this.props.student;
+    handleSubmit = (event, id, tag) => {
+        event.preventDefault();
+        this.props.handleAddTag(id, tag);
+        this.setState({
+            tag: ''
+        });
+    } 
 
-        const reducer = (accumulator, currentValue) => accumulator + currentValue;
-        const average = grades.reduce( reducer, grades.length );
+    render () {
+        const { company, email, firstName, lastName, grades, pic, skill, id, tags, average } = this.props.student;
+
         const gradeTestList = grades.map( (grade, idx ) => {
             return <p key={idx}>Test {idx + 1 }: {grade}%</p>;
         });
         const tagsList = tags.map(( tag, idx ) => <div key={idx} className="tags" >{tag}</div> );
-        // const tagsList = tags.map(( tag, idx ) => console.log(tag) );
-        console.log(tags); 
 
         return (
             <div className="card-container" style={ this.state.show !== true ? {height: '200px'} : {height: '410px' } } >
@@ -78,7 +81,7 @@ class StudentCard extends Component {
                         
                             <form 
                                 id="tag-input" 
-                                onSubmit={( event ) => this.props.handleSubmit( event, this.props.student.id, this.state.tag )}>
+                                onSubmit={( event ) => this.handleSubmit( event, this.props.student.id, this.state.tag )}>
                                 <input 
                                     name="tag" 
                                     className="add-tag-input" 
