@@ -63,8 +63,10 @@ class StudentsContainer extends Component {
     handleAddTag = ( id, state ) => {
         const { addTag, getStudentId } = this.props;
         getStudentId( id );
-        if( id === '' && state === '' ) return;
-        addTag( id, state );
+        if( state !== '' ) {
+            console.log(state);
+            addTag( id, state );
+        }
     }
 
     render () {
