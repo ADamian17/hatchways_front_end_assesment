@@ -30,6 +30,7 @@ class StudentCard extends Component {
         this.setState({
             tag: ''
         });
+        event.target.reset();
     } 
 
     render () {
