@@ -1,6 +1,6 @@
 # Student Profiles ( work in progress! )
 
-[appexample](https://reactappexample.netlify.app/)
+[App Example](https://reactappexample.netlify.app/)
 
 ### Commands
 ``
