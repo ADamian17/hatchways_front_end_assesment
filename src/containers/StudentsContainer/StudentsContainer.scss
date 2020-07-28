@@ -8,6 +8,7 @@
     justify-content: center;
     grid-template-rows: 50px 1fr;
     grid-template-columns: 750px;
+    overflow-x: none;
 
 
     input {
@@ -21,7 +22,7 @@
 
     .students-list-wrapper {
         overflow: scroll;
-        overflow-x: none;
+        overflow-x: hidden;
     }
 }
 

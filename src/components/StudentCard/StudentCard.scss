@@ -1,11 +1,10 @@
 .card-container {
     display: grid;
-    grid-template-columns: 200px auto;
+    grid-template-columns: 200px 535px;
     grid-template-rows: auto;
     width: 735px;
     border-bottom: 1px solid rgba(157, 154, 154, 0.55);
     margin-bottom: 5px;
-    overflow: hidden;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
     .img-wrapper {
