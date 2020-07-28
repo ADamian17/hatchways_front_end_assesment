@@ -1,5 +1,10 @@
 # Student Profiles ( work in progress! )
 
+### Commands
+``
+npm i
+npm start
+``
 ### Technologies Used
 * React / Redux
 * Sass
