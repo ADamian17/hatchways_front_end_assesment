@@ -14,8 +14,7 @@ class StudentsContainer extends Component {
 
     state = {
         searchByName: '',
-        searchByTag: '',
-        tag: ''
+        searchByTag: ''
     }
     
     componentDidMount () {
@@ -66,6 +65,7 @@ class StudentsContainer extends Component {
         if( state !== '' ) {
             console.log(state);
             addTag( id, state );
+
         }
     }
 
