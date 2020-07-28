@@ -83,17 +83,13 @@ class StudentsContainer extends Component {
                     getStudentId={this.props.getStudentId} 
                     onChange={this.handelChange} /> 
             );
-        
-        const styles = {
-            ':-webkit-scrollbar-thumb': { color: 'red' }
-        };
 
         return (
             <div className="container">
                 <div className="search-container">
                     <input id="name-input" name="searchByName" type="search" placeholder="Seacrh by Name" onChange={this.handelChange} />
                 </div>
-                <div className="students-list-wrapper" onScroll={() => this.setState({ scroll: true })} style={styles}>
+                <div className="students-list-wrapper">
                     {studentsList}
                 </div>
             </div>
